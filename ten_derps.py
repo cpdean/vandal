@@ -18,7 +18,7 @@ def ms_of(dt):
 
 def set_hour_to(c, n):
     dt = get_datetime_from_commit(c)
-    dt.hour = n
+    dt = dt.replace(hour=n)
     c.committed_date = ms_of(dt)
 
 
