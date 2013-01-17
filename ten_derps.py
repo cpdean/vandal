@@ -46,13 +46,12 @@ def dirty_change_date_to(repo, commit_sha, datetime_obj):
 
 
 def filter_script_change_date(commit_sha, datetime_obj):
-    filter_template = ("'if [ $GIT_COMMIT = {sha} ]; "
+    filter_template = ("if [ $GIT_COMMIT = {sha} ]; "
                        "then "
                        "export GIT_AUTHOR_DATE=\"{date}\"; "
                        "export GIT_COMMITTER_DATE=\"{date}\"; "
-                       "fi'")
+                       "fi")
     iso_date = datetime_obj.isoformat()
-    iso_date = "Fri Jan 2 21:38:53 2009 -0800"
     return filter_template.format(sha=commit_sha, date=iso_date)
 
 
@@ -67,14 +66,17 @@ def change_date_to(repo, commit_sha, datetime_obj):
 def generate_and_filter_branch(r):
     index = r.index
     for i in range(1, 11):
-        c = index.commit("derp")
+        c = index.commit("derp " + str(i))
 
     index.write()
 
     shas = [c.hexsha for c in r.iter_commits()]
     dates = [new_date().replace(day=i) for i in range(1, 11)]
+    """
     for commit, date in zip(shas, dates):
         dirty_change_date_to(r, commit, date)
+    """
+    change_date_to(r, shas[6], dates[6])
 
     print_dates(r)
 
@@ -89,18 +91,10 @@ def print_dates(r):
 def generate_and_set_stuff_after(r):
     index = r.index
     for i in range(1, 11):
-        c = index.commit("derp")
+        c = index.commit("first")
+        set_date_to(c, i)
 
     index.write()
-
-    print_dates(r)
-
-    com = r.iter_commits()
-    com = list(com)
-    for c, n in zip(com, range(1, len(com) + 1)):
-        set_date_to(c, n)
-
-    print "."
 
     print_dates(r)
 
