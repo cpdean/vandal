@@ -59,13 +59,14 @@ def filter_script_change_date(commit_sha, datetime_obj):
     return filter_template.format(sha=commit_sha, date=iso_date)
 
 
-def change_date_to(repo, commit_sha, datetime_obj):
+def change_date_to(repo, commit_sha, datetime_obj, first_commit=False):
     print "changing", commit_sha[:4]
     git_fn = repo.git
     args = ["-f", "--env-filter"]
     filter_script = filter_script_change_date(commit_sha, datetime_obj)
     args.append(filter_script)
-    args.append(commit_sha + "^..HEAD")
+    if not first_commit:
+        args.append(commit_sha + "^..HEAD")
     return git_fn.filter_branch(args)
 
 
