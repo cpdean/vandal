@@ -70,8 +70,9 @@ def change_date_to(repo, commit_sha, datetime_obj):
 
 def generate_and_filter_branch(r):
     index = r.index
-    for i in range(1, 11):
-        c = index.commit("derp " + str(i))
+    index.commit("un-touchable")
+    for i in range(10):
+        c = index.commit("derp " + str(i + 1))
 
     index.write()
 
