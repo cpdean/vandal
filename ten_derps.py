@@ -82,11 +82,12 @@ def generate_and_filter_branch(r):
 
     shas = [c.hexsha for c in r.iter_commits()]
     shas = shas
-    date_data = {"year": 2012, "month": 4}
+    date_data = {"year": 2012, "month": 4, "day": 1}
+    start_day = new_date().replace(**date_data)
     dates = []
 
     for i in range(len(shas)):
-        dates.append(new_date().replace(day=i + 1, **date_data))
+        dates.append(start_day + datetime.timedelta(hours=i))
 
     # hits newest commit first, so have dates mirror that
     dates = list(reversed(dates))
