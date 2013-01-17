@@ -57,7 +57,7 @@ def filter_script_change_date(commit_sha, datetime_obj):
 
 def change_date_to(repo, commit_sha, datetime_obj):
     git_fn = repo.git
-    args = ["--env-filter"]
+    args = ["-f", "--env-filter"]
     filter_script = filter_script_change_date(commit_sha, datetime_obj)
     args.append(filter_script)
     return git_fn.filter_branch(args)
@@ -72,11 +72,8 @@ def generate_and_filter_branch(r):
 
     shas = [c.hexsha for c in r.iter_commits()]
     dates = [new_date().replace(day=i) for i in range(1, 11)]
-    """
     for commit, date in zip(shas, dates):
-        dirty_change_date_to(r, commit, date)
-    """
-    change_date_to(r, shas[6], dates[6])
+        change_date_to(r, commit, date)
 
     print_dates(r)
 
