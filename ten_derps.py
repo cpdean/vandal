@@ -72,7 +72,7 @@ def change_date_to(repo, commit_sha, datetime_obj, first_commit=False):
 
 def generate_and_filter_branch(r):
     index = r.index
-    for i in range(30):
+    for i in range(60):
         c = index.commit("derp " + str(i))
 
     index.write()
