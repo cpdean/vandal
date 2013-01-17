@@ -65,6 +65,7 @@ def change_date_to(repo, commit_sha, datetime_obj):
     args = ["-f", "--env-filter"]
     filter_script = filter_script_change_date(commit_sha, datetime_obj)
     args.append(filter_script)
+    args.append(commit_sha + "^..HEAD")
     return git_fn.filter_branch(args)
 
 
