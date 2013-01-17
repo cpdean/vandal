@@ -12,6 +12,10 @@ def get_datetime_from_commit(c):
     return datetime.datetime(*struct_time[:-3])
 
 
+def get_hexsha(c):
+    return c.hexsha[:4]
+
+
 def ms_of(dt):
     struct_time = dt.timetuple()
     return calendar.timegm(struct_time)
