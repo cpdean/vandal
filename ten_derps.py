@@ -72,7 +72,6 @@ def change_date_to(repo, commit_sha, datetime_obj, first_commit=False):
 
 def generate_and_filter_branch(r):
     index = r.index
-    index.commit("un-touchable")
     for i in range(10):
         c = index.commit("derp " + str(i + 1))
 
@@ -82,9 +81,19 @@ def generate_and_filter_branch(r):
     print "."
 
     shas = [c.hexsha for c in r.iter_commits()]
-    dates = [new_date().replace(day=i) for i in range(1, 11)]
-    for commit, date in zip(shas, dates):
+    shas = shas
+    date_data = {"year": 2012, "month": 4}
+    dates = []
+
+    for i in range(len(shas)):
+        dates.append(new_date().replace(day=i + 1, **date_data))
+
+    # hits newest commit first, so have dates mirror that
+    dates = list(reversed(dates))
+
+    for commit, date in zip(shas, dates)[:-1]:
         change_date_to(r, commit, date)
+    change_date_to(r, shas[-1], dates[-1], True)
 
     print_dates(r)
 
