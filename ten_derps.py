@@ -93,7 +93,7 @@ def generate_and_filter_branch(r):
 
     for commit, date in zip(shas, dates)[:-1]:
         change_date_to(r, commit, date)
-    change_date_to(r, shas[-1], dates[-1], True)
+    change_date_to(r, shas[-1], dates[-1], True)  # last one's special
 
     print_dates(r)
 
