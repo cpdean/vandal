@@ -25,8 +25,9 @@ def pretty(cells):
 
 def pretty_canvas(cells):
     days_of_week = []
-    sundays = [i for i in cells[0::7]]
-    days_of_week.append(pretty(sundays))
+    for day in range(7):
+        days = [i for i in cells[day::7]]
+        days_of_week.append(pretty(days))
     return "\n".join(days_of_week)
 
 if __name__ == '__main__':
