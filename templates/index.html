@@ -4,13 +4,13 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
     <title></title>
-    <script src="raphael-min.js"></script>
-    <script src="jquery.min.js"></script>
+    <script src="{{ url_for('static', 'raphael-min.js')}}"></script>
+    <script src="{{ url_for('static', 'jquery.min.js') }}"></script>
     
 </head>
 <body>
-<svg id="year_chart" width="700" height="200">
-</svg>
+<svg id="year_chart" width="700" height="200"> </svg>
+<a href="javascript:sendVandalism();"> Send it! </a>
  
 <script>
 function addWeek(paper, x, dates){
@@ -65,11 +65,6 @@ $(function(){
                 day.attr("data-selected", "true");
                 day.css("fill","#0e0");
             }
-        }
-    });
-    $(document).keyup(function(e){
-        if(e.keyCode == 32){ // space-bar
-            console.log(serializeYear());
         }
     });
 });
