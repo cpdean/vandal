@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <title></title>
+    <script src="raphael-min.js" charset="utf-8">
+    </script>
+    
+</head>
+<body>
+<svg id="year_chart" width="700" height="200">
+</svg>
+ 
+<script>
+function addWeek(paper, x, dates){
+    dates = dates.slice(0,7);
+    for(var d in dates){
+        var day = paper.rect(x, d * 12, 10, 10);
+        day.attr("fill", "#0f0");
+        day.attr("stroke", "#fff");
+    }
+}
+
+// Creates canvas 320 × 200 at 10, 50
+var paper = Raphael("year_chart");
+for(var i = 0; i < 52; i++){
+    addWeek(paper, i * 12, [0,1,2,0,1,2,3]);
+}
+
+</script>
+</body>
+</html>
