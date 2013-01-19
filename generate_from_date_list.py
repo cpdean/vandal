@@ -29,7 +29,7 @@ def new_date():
 
 
 def days_from(n):
-    d = {"year": 2012, "day": 22, "month": 1}
+    d = {"year": 2012, "day": 1, "month": 4}
     date = new_date().replace(**d)
     return date + datetime.timedelta(days=n)
 
@@ -57,5 +57,6 @@ def print_dates(r):
 
 if __name__ == '__main__':
     repo = test_repo()
-    for i in range(300*4):
+    #for i in range(300*4):
+    for i in range(10):
         add_commit_to(repo, i)
