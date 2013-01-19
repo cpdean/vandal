@@ -40,7 +40,22 @@ function serializeYear(){
     var year = $("#year_chart rect");
     return year.map(function(){
         return $(this).attr("data-selected") == "true" ? 1 : 0;
-    });
+    }).toArray();
+}
+
+function sendVandalism(){
+    var painted = serializeYear();
+    var startDate = new Date();
+    var data = {startDate: startDate, painted: painted};
+
+    $.ajax({
+        type: "POST",
+        url: "/submit",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        sucess: function(data){
+          console.log("success");
+        }});
 }
 
 
