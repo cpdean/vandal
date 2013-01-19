@@ -19,13 +19,30 @@ function addWeek(paper, x, dates){
         var day = paper.rect(x, d * 12, 10, 10);
         day.attr("fill", "#0f0");
         day.attr("stroke", "#fff");
+        day.attr('title', dates[d].toString());
     }
+}
+
+function getYear(startDate) {
+    var endDate = new Date(startDate);
+    var currentDate = new Date(endDate);
+    endDate.setFullYear(endDate.getFullYear() + 1);
+    var year = [startDate];
+    while(currentDate < endDate){
+        currentDate.setDate(currentDate.getDate() + 1);
+        year.push(new Date(currentDate));
+    }
+    return year;
 }
 
 // Creates canvas 320 × 200 at 10, 50
 var paper = Raphael("year_chart");
-for(var i = 0; i < 52; i++){
-    addWeek(paper, i * 12, [0,1,2,0,1,2,3]);
+var start = new Date(2012, 0, 22);
+var year = getYear(start);
+for(var i = 0; i < year.length/7; i++){
+    var week = year.slice(i * 7, i * 7 + 7);
+    console.log(week);
+    addWeek(paper, i * 12, week);
 }
 
 </script>
