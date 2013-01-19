@@ -4,8 +4,8 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
     <title></title>
-    <script src="raphael-min.js" charset="utf-8">
-    </script>
+    <script src="raphael-min.js"></script>
+    <script src="jquery.min.js"></script>
     
 </head>
 <body>
@@ -17,7 +17,8 @@ function addWeek(paper, x, dates){
     dates = dates.slice(0,7);
     for(var d in dates){
         var day = paper.rect(x, d * 12, 10, 10);
-        day.attr("fill", "#0f0");
+        day.attr("class", "day");
+        day.attr("fill", "#ddd");
         day.attr("stroke", "#fff");
         day.attr('title', dates[d].toString());
     }
@@ -35,15 +36,43 @@ function getYear(startDate) {
     return year;
 }
 
-// Creates canvas 320 × 200 at 10, 50
-var paper = Raphael("year_chart");
-var start = new Date(2012, 0, 22);
-var year = getYear(start);
-for(var i = 0; i < year.length/7; i++){
-    var week = year.slice(i * 7, i * 7 + 7);
-    console.log(week);
-    addWeek(paper, i * 12, week);
+function serializeYear(){
+    var year = $("#year_chart rect");
+    return year.map(function(){
+        return $(this).attr("data-selected") == "true" ? 1 : 0;
+    });
 }
+
+
+$(function(){
+    // Creates canvas 320 × 200 at 10, 50
+    var paper = Raphael("year_chart");
+    var start = new Date(2012, 0, 22);
+    var year = getYear(start);
+    for(var i = 0; i < year.length/7; i++){
+        var week = year.slice(i * 7, i * 7 + 7);
+        addWeek(paper, i * 12, week);
+    }
+    $("svg").on("click","rect", function(e){
+        e.stopPropagation();
+        var day = $(this);
+        if(day.length == 1){
+            if(day.attr("data-selected") == "true"){
+                day.attr("data-selected", "false");
+                day.css("fill","#ddd");
+            }
+            else{
+                day.attr("data-selected", "true");
+                day.css("fill","#0e0");
+            }
+        }
+    });
+    $(document).keyup(function(e){
+        if(e.keyCode == 32){ // space-bar
+            console.log(serializeYear());
+        }
+    });
+});
 
 </script>
 </body>
