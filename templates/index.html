@@ -45,7 +45,7 @@ function serializeYear(){
 
 function sendVandalism(){
     var painted = serializeYear();
-    var startDate = new Date();
+    var startDate = window.startDate;
     var data = {startDate: startDate, painted: painted};
 
     $.ajax({
@@ -62,8 +62,8 @@ function sendVandalism(){
 $(function(){
     // Creates canvas 320 × 200 at 10, 50
     var paper = Raphael("year_chart");
-    var start = new Date(2012, 0, 22);
-    var year = getYear(start);
+    window.startDate = new Date(2012, 0, 22);
+    var year = getYear(window.startDate);
     for(var i = 0; i < year.length/7; i++){
         var week = year.slice(i * 7, i * 7 + 7);
         addWeek(paper, i * 12, week);
