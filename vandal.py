@@ -20,7 +20,7 @@ def submit():
 
 
 def pretty(cells):
-    return "".join(["." if i == 0 else "#" for i in cells])
+    return "".join(["." if i == 0 else str(i) for i in cells])
 
 
 def pretty_canvas(cells):
