@@ -73,7 +73,7 @@ def print_dates(r):
 def generate(r, iso_date, painted):
     date = dateutil.parser.parse(iso_date)
     for i in range(len(painted)):
-        if painted[i] == 1:
+        for times in range(painted[i]):
             current_date = days_from(i, date)
             add_commit_with_date(r, current_date)
 
@@ -81,5 +81,5 @@ def generate(r, iso_date, painted):
 if __name__ == '__main__':
     repo = test_repo()
     date = "2012-01-22T06:00:00.000Z"
-    painted = [0, 1, 0, 1, 0, 1, 0]
+    painted = [0, 1, 0, 1, 0, 2, 0]
     generate(repo, date, painted)
