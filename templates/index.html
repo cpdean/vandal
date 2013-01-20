@@ -6,11 +6,27 @@
     <title></title>
     <script src="{{ url_for('static', filename='raphael-min.js')}}"></script>
     <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    <style>
+        .active{
+            border:3px solid black;
+            margin: 0px;
+        }
+        #paint_brush, #eraser{ 
+            display: inline-block;
+            padding: 10px;
+            margin: 3px;
+            cursor: pointer;
+        }
+    </style>
     
 </head>
 <body>
 <svg id="year_chart" width="700" height="200"> </svg>
+<p>
 <a href="javascript:sendVandalism();"> Send it! </a>
+</p>
+<div id="paint_brush" class="active" style="background:#5e5;">GREEN</div>
+<div id="eraser">ERASERRR</div>
  
 <script>
 function addWeek(paper, x, dates){
@@ -60,7 +76,6 @@ function sendVandalism(){
 
 
 $(function(){
-    // Creates canvas 320 × 200 at 10, 50
     var paper = Raphael("year_chart");
     window.startDate = new Date(2012, 0, 22);
     var year = getYear(window.startDate);
@@ -68,19 +83,45 @@ $(function(){
         var week = year.slice(i * 7, i * 7 + 7);
         addWeek(paper, i * 12, week);
     }
-    $("svg").on("click","rect", function(e){
+
+    window.isMouseDown = false;
+    $(document).mousedown(function(){
+        window.isMouseDown = true;
+    }).mouseup(function(){
+        window.isMouseDown = false;
+    });
+
+    function paint(e){
         e.stopPropagation();
         var day = $(this);
         if(day.length == 1){
-            if(day.attr("data-selected") == "true"){
-                day.attr("data-selected", "false");
-                day.css("fill","#ddd");
-            }
-            else{
+            if(window.painting){
                 day.attr("data-selected", "true");
                 day.css("fill","#0e0");
             }
+            else{
+                day.attr("data-selected", "false");
+                day.css("fill","#ddd");
+            }
         }
+   }
+    $("svg").on("click","rect", paint);
+    $("svg").on("mouseenter","rect", function(e){
+        e.stopPropagation();
+        if(window.isMouseDown){
+            $(this).click();
+        }
+    });
+    window.painting = true;
+    $("#paint_brush").click(function(){
+        $(this).addClass("active");
+        $("#eraser").removeClass("active");
+        window.painting = true;
+    });
+    $("#eraser").click(function(){
+        $(this).addClass("active");
+        $("#paint_brush").removeClass("active");
+        window.painting = false;
     });
 });
 
