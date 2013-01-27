@@ -16,10 +16,12 @@ def submit():
     if request.method == 'POST':
         date = request.json["startDate"]
         painted = request.json["painted"]
+        user_full_name = request.json.get("user_full_name", None)
+        user_email = request.json.get("user_email", None)
         print date
         print pretty_canvas(painted)
-        generate(test_repo(), date, painted, author="John Doe",
-                 email="joe@example.com")
+        generate(test_repo(), date, painted,
+                 author=user_full_name, email=user_email)
         return "OK"
 
 
