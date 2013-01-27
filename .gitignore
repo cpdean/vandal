@@ -1,1 +1,3 @@
 dummy
+*.pyc
+*.swp
