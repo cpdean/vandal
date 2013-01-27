@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+from generate import generate, test_repo
 
 app = Flask(__name__)
 
@@ -13,9 +14,12 @@ def index():
 @app.route('/submit', methods=["GET", "POST"])
 def submit():
     if request.method == 'POST':
-        print request.json["startDate"]
-        print pretty_canvas(request.json["painted"])
-
+        date = request.json["startDate"]
+        painted = request.json["painted"]
+        print date
+        print pretty_canvas(painted)
+        generate(test_repo(), date, painted, author="John Doe",
+                 email="joe@example.com")
         return "OK"
 
 

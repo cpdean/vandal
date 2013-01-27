@@ -50,12 +50,18 @@ def add_commit_to(r, n):
     return process.wait()
 
 
-def add_commit_with_date(r, date):
+def add_commit_with_date(r, date, author=None, email=None):
     directory = r.working_dir
     args = ["git", "commit", "-m", "heybro", "--allow-empty"]
     env = {}
     env["GIT_AUTHOR_DATE"] = date.isoformat()
     env["GIT_COMMITTER_DATE"] = date.isoformat()
+    if author is not None:
+        env["GIT_AUTHOR_NAME"] = author
+        env["GIT_COMMITTER_NAME"] = author
+    if email is not None:
+        env["GIT_AUTHOR_EMAIL"] = email
+        env["GIT_COMMITTER_EMAIL"] = email
     process = subprocess.Popen(args,
                                cwd=directory,
                                env=env,
@@ -70,12 +76,14 @@ def print_dates(r):
         print get_hexsha(c), get_datetime_from_commit(c), c.message.strip()
 
 
-def generate(r, iso_date, painted):
+def generate(r, iso_date, painted,
+             author=None, email=None):
     date = dateutil.parser.parse(iso_date)
     for i in range(len(painted)):
         for times in range(painted[i]):
             current_date = days_from(i, date)
-            add_commit_with_date(r, current_date)
+            add_commit_with_date(r, current_date, author=author,
+                                 email=email)
 
 
 if __name__ == '__main__':
