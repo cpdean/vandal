@@ -3,6 +3,7 @@ from flask import render_template
 from flask import request
 from flask import jsonify
 from generate import generate, test_repo
+import requests
 
 app = Flask(__name__)
 
@@ -28,8 +29,12 @@ def submit():
 
 @app.route('/user')
 def user():
-    return jsonify(user_full_name="Jane Dough",
-                   user_email="jd@example.com")
+    username = request.args["username"]
+    r = requests.get("https://api.github.com/users/" + username)
+    print r
+    name = r.json().get('name', None)
+    email = r.json().get('email', None)
+    return jsonify(user_full_name=name, user_email=email)
 
 
 def pretty(cells):

@@ -89,7 +89,7 @@ function getUserInfo(){
     return $.ajax({
         type: "GET",
         url: "/user",
-        data: JSON.stringify({username: "cpdean"}),
+        data: {username: $("#username").val()},
         contentType: "application/json",
         success: function(data){
             $("#user_full_name").val(data["user_full_name"]);
