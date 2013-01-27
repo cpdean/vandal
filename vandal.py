@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import jsonify
 from generate import generate, test_repo
 
 app = Flask(__name__)
@@ -23,6 +24,12 @@ def submit():
         generate(test_repo(), date, painted,
                  author=user_full_name, email=user_email)
         return "OK"
+
+
+@app.route('/user')
+def user():
+    return jsonify(user_full_name="Jane Dough",
+                   user_email="jd@example.com")
 
 
 def pretty(cells):

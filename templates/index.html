@@ -27,6 +27,11 @@
 </p>
 <div id="paint_brush" class="active" style="background:#5e5;">GREEN</div>
 <div id="eraser">ERASERRR</div>
+<div>
+    User Lookup <input type="text" name="username" id="username"/>
+</div>
+<input type="submit" id="find_user" value="look for user details"/>
+</form>
 <p>Name</p>
 <input type="text" name="user_full_name" id="user_full_name"/>
 <p>Email</p>
@@ -79,6 +84,20 @@ function sendVandalism(){
           console.log("success");
         }});
 }
+
+function getUserInfo(){
+    return $.ajax({
+        type: "GET",
+        url: "/user",
+        data: JSON.stringify({username: "cpdean"}),
+        contentType: "application/json",
+        success: function(data){
+            $("#user_full_name").val(data["user_full_name"]);
+            $("#user_email").val(data["user_email"]);
+        }
+    });
+}
+$("#find_user").click(getUserInfo);
 
 
 $(function(){
