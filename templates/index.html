@@ -77,7 +77,7 @@ function sendVandalism(){
 
 $(function(){
     var paper = Raphael("year_chart");
-    window.startDate = new Date(2012, 0, 22);
+    window.startDate = new Date(2012, 1, 5);
     var year = getYear(window.startDate);
     for(var i = 0; i < year.length/7; i++){
         var week = year.slice(i * 7, i * 7 + 7);
