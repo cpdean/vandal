@@ -17,7 +17,7 @@ def get_hexsha(c):
 
 
 def test_repo():
-    new_path = os.path.join("dummy", "repoh")
+    new_path = os.path.join("dummy")
     import shutil
     shutil.rmtree(new_path, True)
     os.makedirs(new_path)
@@ -80,6 +80,6 @@ def generate(r, iso_date, painted):
 
 if __name__ == '__main__':
     repo = test_repo()
-    date = "2012-01-22T06:00:00.000Z"
-    painted = [0, 1, 0, 1, 0, 2, 0]
+    date = "2012-04-01T06:00:00.000Z"
+    painted = [1, 0, 1, 0, 0, 2, 0]
     generate(repo, date, painted)
